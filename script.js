@@ -43,10 +43,12 @@ function addTask(taskValue) {
     var editEl = document.createElement("div");
     editEl.innerHTML = `<i class="fas fa-edit" style="font-size:15px; margin-right:20px;"></i>`
     editEl.classList.add("editEl");
-    editEl.style.position = 'relative';
-    editEl.style.right = '-220px';
-    editEl.style.top = '-30px';
-    editEl.style.display = 'inline-block';
+    Object.assign(editEl.style, {
+        position: 'relative',
+        right: '-220px',
+        top: '-30px',
+        display: 'inline-block'
+    })
 
 
 
