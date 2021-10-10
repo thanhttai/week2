@@ -21,6 +21,7 @@ function updateValue(event, task) {
 
 }
 
+
 function addTask(taskValue) {
     var task = document.createElement("li");
     task.classList.add("task");
@@ -38,8 +39,28 @@ function addTask(taskValue) {
     trash.classList.add("trash");
     trash.innerHTML = "&times;";
     trash.addEventListener("click", removeTask);
+    //
+    var moveButtons = document.createElement("div");
+    moveButtons.classList.add("button-group");
+    var backLogButton = document.createElement('button');
+    backLogButton.innerHTML = 'Log';
+    backLogButton.addEventListener('click', moveTaskToBacklog);
+    backLogButton.style.margin = '10px 4px';
+    var inProgressButton = document.createElement('button');
+    inProgressButton.innerHTML = 'Progress';
+    inProgressButton.addEventListener('click', moveTaskToInProgress);
+    inProgressButton.style.margin = '10px 4px';
+    var reviewButton = document.createElement('button');
+    reviewButton.innerHTML = 'Review';
+    reviewButton.addEventListener('click', moveTaskToReview);
+    reviewButton.style.margin = '10px 4px';
+    var doneButton = document.createElement('button');
+    doneButton.innerHTML = 'Done'
+    doneButton.addEventListener('click', moveTaskToDone);
+    doneButton.style.margin = '10px 4px';
 
 
+    //
     var editEl = document.createElement("div");
     editEl.innerHTML = `<i class="fas fa-edit" style="font-size:15px; margin-right:20px;"></i>`
     editEl.classList.add("editEl");
@@ -56,12 +77,58 @@ function addTask(taskValue) {
     task.appendChild(taskContent);
     task.appendChild(editEl);
     task.appendChild(trash);
+    task.appendChild(moveButtons);
+    task.appendChild(backLogButton);
+    task.appendChild(inProgressButton);
+    task.appendChild(reviewButton);
+    task.appendChild(doneButton);
 
     editEl.addEventListener('click', (e) => updateValue(e, task))
 
     var tasks = document.getElementById("tasks-added");
     tasks.insertBefore(task, tasks.childNodes[0]);
 }
+
+// start Add buttons/icons that move the task to specific columns automatically.
+function moveTaskToBacklog(event) {
+    let tasks = event.target.parentNode.parentNode;
+    console.log(tasks);
+    let task = event.target.parentNode;
+    console.log(task);
+    tasks.removeChild(task);
+    let backLog = document.getElementById('tasks-added'); ~
+        backLog.append(task);
+}
+
+
+function moveTaskToInProgress(event) {
+    let tasks = event.target.parentNode.parentNode;
+    console.log(tasks);
+    let task = event.target.parentNode;
+    console.log(task);
+    tasks.removeChild(task);
+    let inProgress = document.getElementById('tasks-in-progress'); ~
+        inProgress.append(task);
+}
+function moveTaskToReview(event) {
+    let tasks = event.target.parentNode.parentNode;
+    console.log(tasks);
+    let task = event.target.parentNode;
+    console.log(task);
+    tasks.removeChild(task);
+    let review = document.getElementById('task-review'); ~
+        review.append(task);
+}
+function moveTaskToDone(event) {
+    let tasks = event.target.parentNode.parentNode;
+    console.log(tasks);
+    let task = event.target.parentNode;
+    console.log(task);
+    tasks.removeChild(task);
+    let done = document.getElementById('tasks-done');
+    done.append(task);
+}
+//end Add buttons/icons that move the task to specific columns automatically.
 
 
 function removeTask(event) {
