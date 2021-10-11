@@ -10,16 +10,23 @@ taskInput.onkeyup = function (e) {
         taskInput.value = "";
     }
 }
-
-function updateValue(event, task) {
-    const check = Boolean(event.target.className === 'editEl' || event.target.className === 'fa fa-edit');
-    if (check) {
-        const content = task.textContent;
-        taskInput.value = content;
-        const tasks = document.querySelector('.tasks').removeChild(task)
+function updateValue(event) {
+    const liElement = event.target.parentNode.parentNode;
+    const contentEl = liElement.querySelector('.task-content');
+    const editeBtnEl = liElement.querySelector('.editEl');
+    editeBtnEl.style.display = 'none'
+    const value = contentEl.textContent;
+    contentEl.innerHTML = `<textarea class="task-content task-content-textarea">${value}</textarea>`;
+    contentEl.onkeydown = function (e) {
+        const editedValue = e.target.value;
+        if (e.keyCode === 13 && editedValue !== "") {
+            contentEl.innerHTML = `<div class="task-content">${editedValue}</div>`;
+            editeBtnEl.style.display = 'block'
+        }
     }
 
 }
+
 
 
 function addTask(taskValue) {
@@ -70,6 +77,8 @@ function addTask(taskValue) {
         top: '-30px',
         display: 'inline-block'
     })
+    editEl.addEventListener('click', updateValue)
+
 
 
 
@@ -82,8 +91,6 @@ function addTask(taskValue) {
     task.appendChild(inProgressButton);
     task.appendChild(reviewButton);
     task.appendChild(doneButton);
-
-    editEl.addEventListener('click', (e) => updateValue(e, task))
 
     var tasks = document.getElementById("tasks-added");
     tasks.insertBefore(task, tasks.childNodes[0]);
@@ -187,4 +194,5 @@ for (var index = 0; index < dropzones.length; index++) {
     dropzone.addEventListener("dragleave", dragLeave);
     dropzone.addEventListener("drop", dragDrop);
 }
+
 
